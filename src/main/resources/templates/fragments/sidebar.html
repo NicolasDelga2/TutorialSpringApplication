@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<aside>
+    <div id="sidebar" class="nav-collapse" th:fragment="sidebar">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu">
+            <li class="active">
+                <a class="" th:href="@{/index}">
+                    <i class="icon_house_alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li class="sub-menu">
+                <a href="javascript:;" class="">
+                    <i class="icon_document_alt"></i>
+                    <span>Vehicles</span>
+                    <span class="menu-arrow arrow_carrot-right"></span>
+                </a>
+                <ul class="sub">
+                    <li><a class="" th:href="@{/vehicle}">Vehicle Data</a></li>
+                    <li><a class="" th:href="@{/vehicleMaintenence}">Maintenance</a></li>
+                    <li><a class="" th:href="@{/vehicleMovement}">Movements</a></li>
+                    <li><a class="" th:href="@{/vehicleHire}">Hires</a></li>
+                </ul>
+            </li>
+
+            <li class="sub-menu">
+                <a href="javascript:;" class="">
+                    <i class="icon_desktop"></i>
+                    <span>Parameters</span>
+                    <span class="menu-arrow arrow_carrot-right"></span>
+                </a>
+                <ul class="sub">
+                    <li><a class="" th:href="@{/vehicleMake}">Vehicle Make</a></li>
+                    <li><a class="" th:href="@{/vehicleTypes}">Vehicle Types</a></li>
+                    <li><a class="" th:href="@{/vehicleModel}">Vehicle Models</a></li>
+                    <li><a class="" th:href="@{/vehicleStatus}">Status Values</a></li>
+                </ul>
+            </li>
+
+            <li class="sub-menu">
+                <a href="javascript:;" class="">
+                    <i class="icon_desktop"></i>
+                    <span>People</span>
+                    <span class="menu-arrow arrow_carrot-right"></span>
+                </a>
+                <ul class="sub">
+                    <li><a class="" th:href="@{/employee}">Employees</a></li>
+                    <li><a class="" th:href="@{/client}">Clients</a></li>
+                    <li><a class="" th:href="@{/supplier}">Suppliers</a></li>
+                    <li><a class="" th:href="@{/contact}">Contacts</a></li>
+                    <li><a class="" th:href="@{/user}">Users</a></li>
+                </ul>
+            </li>
+
+            <li class="sub-menu">
+                <a href="javascript:;" class="">
+                    <i class="icon_desktop"></i>
+                    <span>HR Setting</span>
+                    <span class="menu-arrow arrow_carrot-right"></span>
+                </a>
+                <ul class="sub">
+                    <li><a class="" th:href="@{/jobTitle}">Job Titles</a></li>
+                    <li><a class="" th:href="@{/employeeType}">Employee Types</a></li>
+
+                </ul>
+            </li>
+
+            <li class="sub-menu">
+                <a href="javascript:;" class="">
+                    <i class="icon_desktop"></i>
+                    <span>Accounts</span>
+                    <span class="menu-arrow arrow_carrot-right"></span>
+                </a>
+                <ul class="sub">
+                    <li><a class="" th:href="@{/invoice}">Invoices</a></li>
+                    <li><a class="" th:href="@{/invoiceStatus}">Invoice Status Values</a></li>
+
+                </ul>
+            </li>
+
+            <li class="sub-menu">
+                <a href="javascript:;" class="">
+                    <i class="icon_desktop"></i>
+                    <span>Globals</span>
+                    <span class="menu-arrow arrow_carrot-right"></span>
+                </a>
+                <ul class="sub">
+                    <li><a class="" th:href="@{/countries}">Countries</a></li>
+                    <li><a class="" th:href="@{/states}">States</a></li>
+                    <li><a class="" th:href="@{/location}">Locations</a></li>
+
+
+                </ul>
+            </li>
+
+
+        </ul>
+        <!-- sidebar menu end-->
+    </div>
+</aside>
+
+</body>
+</html>
