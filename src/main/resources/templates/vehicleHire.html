@@ -316,7 +316,7 @@
       <section class="wrapper">
         <div class="row">
           <div class="col-lg-12">
-            <h3 class="page-header"><i class="fa fa fa-bars"></i> Pages</h3>
+            <h3 class="page-header"><i class="fa fa fa-bars"></i> Vehicle Hire</h3>
             <ol class="breadcrumb">
               <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
               <li><i class="fa fa-bars"></i>Pages</li>
@@ -324,9 +324,36 @@
             </ol>
           </div>
         </div>
-        <!-- page start-->
-    <h1>List of Vehicle Hire</h1>
-        <!-- page end-->
+          <!-- page start-->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">New Vehicle Movement</button>
+
+          <table class="table">
+              <thead>
+              <tr>
+                  <th>ID</th>
+                  <th>Vehicle</th>
+                  <th>Date</th>
+                  <th>Remarks</th>
+                  <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="vehicleMovement:${vehicleMovements}">
+                  <td th:text="${vehicleMovement.id}"></td>
+                  <td th:text="${vehicleMovement.vehicle.name}"></td>
+                  <td th:text="${vehicleMovement.date1}"></td>
+                  <td th:text="${vehicleMovement.remarks}"></td>
+                  <td>
+                      <div class="btn-group">
+                          <a th:href="@{/vehicleMovement/findById/(id=${vehicleMovement.id})}" class="btn btn-primary" id="editButton"><i class="icon_pencil-edit"></i></a>
+                          <a th:href="@{/vehicleMovement/findById/(id=${vehicleMovement.id})}" class="btn btn-success" id="detailsButton"><i class="icon_document_alt"></i></a>
+                          <a th:href="@{/vehicleMovement/delete/(id=${vehicleMovement.id})}" class="btn btn-danger" id="deleteButton"><i class="icon_close_alt2"></i></a>
+                      </div>
+                  </td>
+              </tr>
+              </tbody>
+          </table>
+          <!-- page end-->
       </section>
     </section>
     <!--main content end-->
