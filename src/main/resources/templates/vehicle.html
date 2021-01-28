@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
   <meta charset="utf-8">
@@ -316,7 +316,7 @@
       <section class="wrapper">
         <div class="row">
           <div class="col-lg-12">
-            <h3 class="page-header"><i class="fa fa fa-bars"></i> Pages</h3>
+            <h3 class="page-header"><i class="fa fa fa-bars"></i> Vehicle</h3>
             <ol class="breadcrumb">
               <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
               <li><i class="fa fa-bars"></i>Pages</li>
@@ -324,9 +324,37 @@
             </ol>
           </div>
         </div>
-        <!-- page start-->
-    <h1>List of Vehicle</h1>
-        <!-- page end-->
+          <!-- page start-->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">New Vehicle</button>
+
+          <table class="table">
+              <thead>
+              <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Acquisition Date</th>
+                  <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="vehicle:${vehicles}">
+                  <td th:text="${vehicle.id}"></td>
+                  <td th:text="${vehicle.name}"></td>
+                  <td th:text="${vehicle.description}"></td>
+                  <td th:text="${vehicle.acquisitionDate}"></td>
+                  <td>
+                      <div class="btn-group">
+                          <a th:href="@{/vehicle/findById/(id=${vehicle.id})}" class="btn btn-primary" id="editButton"><i class="icon_pencil-edit"></i></a>
+                          <a th:href="@{/vehicle/findById/(id=${vehicle.id})}" class="btn btn-success" id="detailsButton"><i class="icon_document_alt"></i></a>
+                          <a th:href="@{/vehicle/delete/(id=${vehicle.id})}" class="btn btn-danger" id="deleteButton"><i class="icon_close_alt2"></i></a>
+                      </div>
+                  </td>
+              </tr>
+              </tbody>
+          </table>
+
+          <!-- page end-->
       </section>
     </section>
     <!--main content end-->
@@ -343,6 +371,387 @@
     </div>
   </section>
   <!-- container section end -->
+
+
+  <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <form th:action="@{/vehicle/addNew}" method="post">
+          <div class="modal-dialog modal-lg" role="document" style="width:70%">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">New Vehicle</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+
+                  <div class="modal-body">
+                      <form>
+                          <table width="100%">
+                              <tr>
+                                  <td width="50%">
+
+                                      <div class="form-group row">
+                                          <label for="txtNameAdd" class="col-sm-4 col-form-label">Vehicle Name: </label>
+                                          <div class="col-sm-6">
+                                              <input type="text" class="form-control" id="txtNameAdd" name="name" placeholder="Vehicle Name">
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row">
+                                          <label for="vehicleTypeAdd" class="col-sm-4 col-form-label">Vehicle Type: </label>
+                                          <div class="col-sm-6">
+                                              <select class="form-control" id="vehicleTypeAdd" name="vehicletypeid">
+                                                  <option>-SELECT-</option>
+                                                  <option th:each="vehicleType : ${vehicleTypes}"
+                                                          th:value="${vehicleType.id}"
+                                                          th:text="${vehicleType.description}">
+                                                  </option>
+                                              </select>
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row">
+                                          <label for="txtVehicleNumber" class="col-sm-4 col-form-label">Vehicle Number: </label>
+                                          <div class="col-sm-6">
+                                              <input type="text" class="form-control" id="txtVehicleNumber" name="vehicleNumber" placeholder="Vehicle Number">
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row">
+                                          <label for="txtRegistrationDate" class="col-sm-4 col-form-label">Registration Date:</label>
+                                          <div class="col-sm-6">
+                                              <input type="date" class="form-control" id="txtRegistrationDate" name="registrationDate" >
+                                          </div>
+                                      </div>
+
+
+                                      <div class="form-group row">
+                                          <label for="txtAcquisitionDate" class="col-sm-4 col-form-label">Acquisition Date:</label>
+                                          <div class="col-sm-6">
+                                              <input type="date" class="form-control" id="txtAcquisitionDate" name="acquisitionDate" >
+                                          </div>
+                                      </div>
+
+                                  <div class="form-group row">
+                                      <label for="txtDescription" class="col-sm-4 col-form-label">Description: </label>
+                                      <div class="col-sm-6">
+                                          <input type="text" class="form-control" id="txtDescription" name="description" placeholder="Description">
+                                      </div>
+                                  </div>
+
+                                      <div class="form-group row">
+                                          <label for="vehicleMakeAdd" class="col-sm-4 col-form-label">Vehicle Make: </label>
+                                          <div class="col-sm-6">
+                                              <select class="form-control" id="vehicleMakeAdd" name="vehiclemakeid">
+                                                  <option>-SELECT-</option>
+                                                  <option th:each="vehicleMake : ${vehicleMakes}"
+                                                          th:value="${vehicleMake.id}"
+                                                          th:text="${vehicleMake.description}">
+                                                  </option>
+                                              </select>
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row">
+                                          <label for="vehicleModelAdd" class="col-sm-4 col-form-label">Vehicle Model: </label>
+                                          <div class="col-sm-6">
+                                              <select class="form-control" id="vehicleModelAdd" name="vehiclemodelid">
+                                                  <option>-SELECT-</option>
+                                                  <option th:each="vehicleModel : ${vehicleModels}"
+                                                          th:value="${vehicleModel.id}"
+                                                          th:text="${vehicleModel.description}">
+                                                  </option>
+                                              </select>
+                                          </div>
+                                      </div>
+
+
+                                      <div class="form-group row">
+                                          <label for="locationAdd" class="col-sm-4 col-form-label">Location: </label>
+                                          <div class="col-sm-6">
+                                              <select class="form-control" id="locationAdd" name="locationid">
+                                                  <option>-SELECT-</option>
+                                                  <option th:each="location : ${locations}"
+                                                          th:value="${location.id}"
+                                                          th:text="${location.description}">
+                                                  </option>
+                                              </select>
+                                          </div>
+                                      </div>
+
+                                  </td>
+                                  <td width="50%" style="padding-left:10px">
+
+                                      <div class="form-group row">
+                                          <label for="txtPower" class="col-sm-4 col-form-label">Power: </label>
+                                          <div class="col-sm-6">
+                                              <input type="text" class="form-control" id="txtPower" name="power" placeholder="Power">
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row">
+                                          <label for="txtFuelCapacityAdd" class="col-sm-4 col-form-label">Fuel Capacity: </label>
+                                          <div class="col-sm-6">
+                                              <input type="text" class="form-control" id="txtFuelCapacityAdd" name="fuelCapacity" placeholder="Fuel Capacity">
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row">
+                                          <label for="txtRemarksAdd" class="col-sm-4 col-form-label">Remarks: </label>
+                                          <div class="col-sm-6">
+                                              <input type="text" class="form-control" id="txtRemarksAdd" name="remarks" placeholder="Remarks">
+                                          </div>
+                                      </div>
+
+
+                                      <div class="form-group row">
+                                          <label for="employeeInCharge" class="col-sm-4 col-form-label">In Charge: </label>
+                                          <div class="col-sm-6">
+                                              <select class="form-control" id="employeeInCharge" name="employeeid">
+                                                  <option>-SELECT-</option>
+                                                  <option th:each="employee : ${employees}"
+                                                          th:value="${employee.id}"
+                                                          th:text="${employee.lastname}">
+                                                  </option>
+                                              </select>
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row">
+                                          <label for="vehicleStatusAdd" class="col-sm-4 col-form-label">Current Status: </label>
+                                          <div class="col-sm-6">
+                                              <select class="form-control" id="vehicleStatusAdd" name="vehiclestatusid">
+                                                  <option>-SELECT-</option>
+                                                  <option th:each="vehicleStatu : ${vehicleStatus}"
+                                                          th:value="${vehicleStatu.id}"
+                                                          th:text="${vehicleStatu.description}">
+                                                  </option>
+                                              </select>
+                                          </div>
+                                      </div>
+
+
+                                      <div class="form-group row">
+                                          <label for="fupImageAdd" class="col-sm-4 col-form-label">Select Image:</label>
+                                          <div class="col-sm-6">
+                                              <input type="file" class="form-control" id="fupImageAdd" name="photo" placeholder="Select File">
+                                          </div>
+                                      </div>
+                                  </td>
+                              </tr>
+                          </table>
+                          <button type="submit" class="btn btn-primary">OK</button>
+                      </form>
+                  </div>
+
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+              </div>
+          </div>
+      </form>
+  </div>
+
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <form th:action="@{/vehicle/update}" method="put">
+          <div class="modal-dialog modal-lg" role="document" style="width:70%">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Edit Client Record</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <form>
+                          <table width="100%">
+                              <tr>
+                                  <td width="50%">
+
+                                      <div class="form-group row">
+                                          <label for="vehicleNameEdit" class="col-sm-4 col-form-label">Vehicle Name: </label>
+                                          <div class="col-sm-6">
+                                              <input type="text" class="form-control" id="vehicleNameEdit" name="name" placeholder="Vehicle Name">
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row">
+                                          <label for="vehicleTypeEdit" class="col-sm-4 col-form-label">Vehicle Type: </label>
+                                          <div class="col-sm-6">
+                                              <select class="form-control" id="vehicleTypeEdit" name="vehicletypeid">
+                                                  <option>-SELECT-</option>
+                                                  <option th:each="vehicleType : ${vehicleTypes}"
+                                                          th:value="${vehicleType.id}"
+                                                          th:text="${vehicleType.description}">
+                                                  </option>
+                                              </select>
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row">
+                                          <label for="txtVehicleNumberEdit" class="col-sm-4 col-form-label">Vehicle Number: </label>
+                                          <div class="col-sm-6">
+                                              <input type="text" class="form-control" id="txtVehicleNumberEdit" name="vehicleNumber" placeholder="Vehicle Number">
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row">
+                                          <label for="txtRegistrationDateEdit" class="col-sm-4 col-form-label">Registration Date:</label>
+                                          <div class="col-sm-6">
+                                              <input type="date" class="form-control" id="txtRegistrationDateEdit" name="registrationDate" >
+                                          </div>
+                                      </div>
+
+
+                                      <div class="form-group row">
+                                          <label for="txtAcquisitionDateEdit" class="col-sm-4 col-form-label">Acquisition Date:</label>
+                                          <div class="col-sm-6">
+                                              <input type="date" class="form-control" id="txtAcquisitionDateEdit" name="acquisitionDate" >
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row">
+                                          <label for="txtDescriptionEdit" class="col-sm-4 col-form-label">Description: </label>
+                                          <div class="col-sm-6">
+                                              <input type="text" class="form-control" id="txtDescriptionEdit" name="description" placeholder="Description">
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row">
+                                          <label for="vehicleMakeAdd" class="col-sm-4 col-form-label">Vehicle Make: </label>
+                                          <div class="col-sm-6">
+                                              <select class="form-control" id="vehicleMakeEdit" name="vehiclemakeid">
+                                                  <option>-SELECT-</option>
+                                                  <option th:each="vehicleMake : ${vehicleMakes}"
+                                                          th:value="${vehicleMake.id}"
+                                                          th:text="${vehicleMake.description}">
+                                                  </option>
+                                              </select>
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row">
+                                          <label for="vehicleModelEdit" class="col-sm-4 col-form-label">Vehicle Model: </label>
+                                          <div class="col-sm-6">
+                                              <select class="form-control" id="vehicleModelEdit" name="vehiclemodelid">
+                                                  <option>-SELECT-</option>
+                                                  <option th:each="vehicleModel : ${vehicleModels}"
+                                                          th:value="${vehicleModel.id}"
+                                                          th:text="${vehicleModel.description}">
+                                                  </option>
+                                              </select>
+                                          </div>
+                                      </div>
+
+
+                                      <div class="form-group row">
+                                          <label for="locationEdit" class="col-sm-4 col-form-label">Location: </label>
+                                          <div class="col-sm-6">
+                                              <select class="form-control" id="locationEdit" name="locationid">
+                                                  <option>-SELECT-</option>
+                                                  <option th:each="location : ${locations}"
+                                                          th:value="${location.id}"
+                                                          th:text="${location.description}">
+                                                  </option>
+                                              </select>
+                                          </div>
+                                      </div>
+
+                                  </td>
+                                  <td width="50%" style="padding-left:10px">
+
+                                      <div class="form-group row">
+                                          <label for="txtPowerEdit" class="col-sm-4 col-form-label">Power: </label>
+                                          <div class="col-sm-6">
+                                              <input type="text" class="form-control" id="txtPowerEdit" name="power" placeholder="Power">
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row">
+                                          <label for="txtFuelCapacityEdit" class="col-sm-4 col-form-label">Fuel Capacity: </label>
+                                          <div class="col-sm-6">
+                                              <input type="text" class="form-control" id="txtFuelCapacityEdit" name="fuelCapacity" placeholder="Fuel Capacity">
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row">
+                                          <label for="txtRemarksAdd" class="col-sm-4 col-form-label">Remarks: </label>
+                                          <div class="col-sm-6">
+                                              <input type="text" class="form-control" id="txtRemarksEdit" name="remarks" placeholder="Remarks">
+                                          </div>
+                                      </div>
+
+
+                                      <div class="form-group row">
+                                          <label for="employeeInChargeEdit" class="col-sm-4 col-form-label">In Charge: </label>
+                                          <div class="col-sm-6">
+                                              <select class="form-control" id="employeeInChargeEdit" name="employeeid">
+                                                  <option>-SELECT-</option>
+                                                  <option th:each="employee : ${employees}"
+                                                          th:value="${employee.id}"
+                                                          th:text="${employee.lastname}">
+                                                  </option>
+                                              </select>
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row">
+                                          <label for="vehicleStatusEdit" class="col-sm-4 col-form-label">Current Status: </label>
+                                          <div class="col-sm-6">
+                                              <select class="form-control" id="vehicleStatusEdit" name="vehiclestatusid">
+                                                  <option>-SELECT-</option>
+                                                  <option th:each="vehicleStatu : ${vehicleStatus}"
+                                                          th:value="${vehicleStatu.id}"
+                                                          th:text="${vehicleStatu.description}">
+                                                  </option>
+                                              </select>
+                                          </div>
+                                      </div>
+
+
+                                      <div class="form-group row">
+                                          <label for="fupImageAdd" class="col-sm-4 col-form-label">Select Image:</label>
+                                          <div class="col-sm-6">
+                                              <input type="file" class="form-control" id="fupImageEdit" name="photo" placeholder="Select File">
+                                          </div>
+                                      </div>
+                                  </td>
+                              </tr>
+                          </table>
+                          <button type="submit" class="btn btn-primary">OK</button>
+                      </form>
+                  </div>
+
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
+              </div>
+          </div>
+      </form>
+  </div>
+
+  <div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title">Confirm delete</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <p>Are you sure you want to delete this record?</p>
+              </div>
+              <div class="modal-footer">
+                  <a href="" class="btn btn-primary" id="confirmDeleteButton">Yes, Delete</a>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
   <!-- javascripts -->
   <script src="js/jquery.js"></script>
   <script src="js/bootstrap.min.js"></script>
